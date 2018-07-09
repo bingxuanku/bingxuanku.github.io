@@ -1,0 +1,103 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="华哥随笔"><title>web前端-yypack | 华哥的小窝</title><link rel="stylesheet" type="text/css" href="//fonts.css.network/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2.0"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=1.2.0"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">web前端-yypack</h1><a id="logo" href="/.">华哥的小窝</a><p class="description">小窝</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">web前端-yypack</h1><div class="post-meta">Jun 16, 2018<span> | </span><span class="category"><a href="/categories/web前端/">web前端</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><div class="post-content"><p>###web前端指南-yypack</p>
+<p>yypack是面向前端的工程构建工具。解决前端工程中资源加载、模块化开发、自动化工具、代码部署等问题。</p>
+<p>1、安装全局依赖<br>npm install -g typescript<br>gem install compass</p>
+<p>2、安装yypack<br>npm install -g yypack<br>例子<br>1.mkdir my-proj<br>cd my-proj</p>
+<p>yypack init // 生成yypack.json，配置看后文介绍<br>yypack release dev<br>yypack server start</p>
+<p>在浏览器中打开127.0.0.1:8080<br>2.使用脚手架生成项目</p>
+<p>yypack create</p>
+<p>支持功能<br>语法增强，支持</p>
+<p>(typescript,es6,coffee) =&gt; es5<br>sass =&gt; css<br>(jade,md) =&gt; html<br>jsx =&gt; js<br>静态资源加版本号（支持.html inline模式 <script src="a.js" inline=""></script>,</p>
+<p> <link href="a.css" inline="">）</p>
+<p>文件压缩</p>
+<p>源文件常量注入</p>
+<p>文件大小检测，主要是图片文件，默认大于200k报警</p>
+<p>增加velocity模板语法支持</p>
+<p>支持jade文件mock，默认会去根目录mock目录下查找路径相同的js文件，比如 mock/index.data.js</p>
+<p>模块加载<br>yypack支持browserify式的模块加载<br>// require业务js文件<br>let head = require(‘./head.js’)</p>
+<p>// require 4种格式模板文件<br>let headTemplate = require(‘./head.tpl’)<br>require(‘./head.html’)<br>require(‘./head.jade’)<br>require(‘./head.md’)</p>
+<p>// require css<br>// index.css内容会被以style tag方式插入到head里<br>// cssModule代表生成的style tag<br>let cssModule = require(‘./index.css’)</p>
+<p>// require npm安装的node包（不支持依赖native环境的包）<br>// 在项目根目录npm install –save cookie<br>let cookie = require(‘cookie’)</p>
+<p>yypack.json<br>{<br>    “server”: {</p>
+<pre><code>    //server监听的端口
+    &quot;port&quot;: 8080    
+},
+&quot;release&quot;: {
+
+    //项目名，会加到被引用的资源前
+    &quot;project&quot;: &quot;&quot;,  
+
+    //域名，会加到被引用的资源前
+    &quot;domain&quot;: &quot;//s1.mljr.com&quot;,
+
+    //是否开启coffee编译
+    &quot;coffee&quot;: &quot;false&quot;, //默认不开启（如果开启，需要提前全局安装coffeescript, npm install -g coffee-script）
+
+    //编译实例
+    &quot;cases&quot;: {
+        &quot;dev&quot;: {
+            &quot;optimize&quot;: false,
+            &quot;version&quot;: true,
+            &quot;watch&quot;: true,
+
+            //常量注入
+            //js里使用：let a = &quot;@{yypack.aa}&quot; =&gt; let a = &quot;aaaa&quot;
+            //jade里使用： #{yypack.aa}
+            &quot;env&quot;: {    
+                &quot;aa&quot;: &quot;aaaa&quot;,
+                &quot;bb&quot;: &quot;bbbb&quot;,
+                &quot;a&quot;: &quot;cc&quot;
+            }
+        },
+        &quot;qa&quot;: {
+            //是否压缩，默认false
+            &quot;optimize&quot;: true,
+
+            //是否加版本号，默认false
+            &quot;version&quot;: true,
+
+            //是否watch，默认false 
+            &quot;watch&quot;: false,
+
+            //是否启用域名，默认false 
+            &quot;domain&quot;: true,
+
+            //覆盖全局的domain
+            &quot;reDomain&quot;: &quot;//s2.mljr.com&quot;,
+
+             //指定编译结果目录，
+             //默认为/Users/${user}/.fedog-tmp/www
+            &quot;www&quot;: &quot;../www&quot;,
+
+            //如果指定为ture，则保留page目录下的jade文件不编译，主要用来发布时server端使用，并且会�强制开启optimize
+            &quot;jadeKeep&quot; : false
+        }
+    },
+
+    // 设置文件原样复制，中间不做任何处理
+    &quot;copy&quot;: [
+        &quot;**/*.min.js&quot;,
+        &quot;static/script/copy/**/*&quot;
+    ],
+
+    // 设置文件忽略
+    &quot;ignore&quot;: [
+        &quot;static/script/ignore/**/*&quot;,
+        &quot;yypack.json&quot;
+    ],
+
+    // 设置全局模块引用
+    &quot;externals&quot;: {
+        &quot;jquery&quot;: &quot;window.$&quot;
+    },
+
+    // 设置postcss配置
+    &quot;postcss&quot;: {
+        &quot;autoprefixer&quot;: {&quot;browsers&quot;: [&quot;last 2 versions&quot;, &quot;iOS 7&quot;, &quot;Android 4.4&quot;, &quot;&gt; 5%&quot;]},
+        &quot;pxtorem&quot;: {
+            &quot;root_value&quot;: 40,
+            &quot;prop_white_list&quot;: []
+        }
+    }
+}
+</code></pre><p>}</p>
+</div><div class="tags"><a href="/tags/随笔/">随笔</a></div><div class="post-nav"><a href="/2017/08/18/web前端-h5相关开发规范/" class="next">web前端-h5相关开发规范</a></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="widget"><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="请输入关键字..."/></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-gui"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/android/">android</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/blog/">blog</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/web前端/">web前端</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/小程序/">小程序</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">1</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/随笔/" style="font-size: 15px;">随笔</a> <a href="/tags/博客，文章/" style="font-size: 15px;">博客，文章</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-fei"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/06/16/web前端-yypack说明/">web前端-yypack</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/web前端-h5相关开发规范/">web前端-h5相关开发规范</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/21/web前端-js/">web前端-js学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/20/web前端-html-css/">web前端-html-css学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/16/web前端相关命令/">web前端相关命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/16/web前端指南/">web前端指南-大概的学习路线</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/web前端相关/">web前端相关-制定详细学习计划</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/web前端-jade/">web前端-jade</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/03/android相关/">android相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/03/小程序相关/">小程序相关</a></li></ul></div></div></div></div><a id="totop" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.2.0" async></script><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |<a href="/atom.xml">订阅本站</a> |<span>联系博主：<a href="mailto:87544319@qq.com" target="_blank" class="fa fa-email"> </a><a href="暂无" target="_blank" class="fa fa-weibo"></a><a href="bingxuanku.github.io" target="_blank" class="fa fa-github"> </a></span></p><p><span> Copyright &copy;<a href="/." rel="nofollow">华哥</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span><span><a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> Theme </a>by<a rel="nofollow" target="_blank" href="https://github.com/chaooo"> Charles.</a></span></p></div></div></div><script type="text/javascript" src="/js/search.json.js?v=1.2.0"></script></body></html>

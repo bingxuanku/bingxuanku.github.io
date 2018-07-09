@@ -1,0 +1,73 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="华哥随笔"><title>web前端-h5相关开发规范 | 华哥的小窝</title><link rel="stylesheet" type="text/css" href="//fonts.css.network/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.2.0"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=1.2.0"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">web前端-h5相关开发规范</h1><a id="logo" href="/.">华哥的小窝</a><p class="description">小窝</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">web前端-h5相关开发规范</h1><div class="post-meta">Aug 18, 2017<span> | </span><span class="category"><a href="/categories/web前端/">web前端</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><div class="post-content"><p>###web前端指南-h5相关开发规范</p>
+<p>美利金融H5页面开发流程<br>美利金融H5页面开发流程<br>移动端，新一轮的Fe挑战。<br>iOS以及Android下，各种设备不同分辨率的挑战，以及国产机的层出不穷，页面兼容，HTML5 API的支持程度的不同，和PC上的IE浏览器的兼容性对比，移动端隐形坑才是处处埋人的陷阱。</p>
+<p>由于移动H5应用近几年的兴起，实践经验并没有像PC那样，已经沉淀出一套系统避坑的最佳实践。外加移动设备的快速迭代，新的问题总会时时出现，因此需要前端更加严谨的开发态度和学习实践能力。</p>
+<p>名称约定<br>以下 fe， 在文章中所指是Web前端开发。 viewport，表示手机的可视窗口。</p>
+<p>从设计稿到H5页面<br>这里以美利线上的H5帮助中心页面为案例，来说明下前端开发之前，和开发时所需要注意问题。</p>
+<p>demo</p>
+<p>开发前的思考<br>看起来很简单的一个页面，也就是PC普通页面的一个小栏目大小。 然后你需要支持的终端设备分辨率却是：</p>
+<p>device￼</p>
+<p>截图看着好像挺少的(- -|)，来来来点点这里：<a href="https://design.google.com/devices/" target="_blank" rel="external">https://design.google.com/devices/</a></p>
+<p>再来看看H5页面所需要支持的终端设备机型： android￼</p>
+<p>开发前，应该了解清楚我们的目标用户所使用的机型，或者通过已上线项目的统计数据来分析出，我们所需支持的设备。</p>
+<p>新的机遇，难以预测的风险。<br>HTML5给我们带来丰富的功能。这些功能背后所隐藏的风险也是需要注意的。 特别是不同手机系统间，同一个功能，出现不支持以及不兼容的情况。</p>
+<p>所支持的设备系统： count￼</p>
+<p>以终端设备上弹数字键盘为例，在大家看来是很简单的一个功能。</p>
+<h1 id="只需要设置type类型为number，-手机就会弹出数字键盘，多么智能！"><a href="#只需要设置type类型为number，-手机就会弹出数字键盘，多么智能！" class="headerlink" title="只需要设置type类型为number， 手机就会弹出数字键盘，多么智能！"></a>只需要设置type类型为number， 手机就会弹出数字键盘，多么智能！</h1><p><input type="number" value=""></p>
+<h1 id="弹出日历控件"><a href="#弹出日历控件" class="headerlink" title="弹出日历控件"></a>弹出日历控件</h1><p><input type="date" value=""></p>
+<h1 id="弹出email键盘"><a href="#弹出email键盘" class="headerlink" title="弹出email键盘"></a>弹出email键盘</h1><p><input type="email" value=""><br>一行代码搞定，可以去提交去测试了。 5分钟后，弹出bug出现了。这时我们考虑是不是功能的兼容性还存在问题。定位问题后，从下图就可以看出，仅仅很简单的一个功能，不同系统，不同浏览器版本的支持程度绿色代表都支持，红色代表不支持，茶黄色代表部分支持。</p>
+<p>zhichi￼</p>
+<p>看到上边的这些数据，这么简单的一个页面，fe需要思考和注意的地方却这么多。 蛋碎了…！(°ー°〃)</p>
+<p>开发时所具备基本认知概念<br>基础概念<br>css pixel 浏览器使用的抽象单位<br>dp(device-pixel)显示屏幕的的最小物理单位，每个dp包含自己的颜色、亮度 $$ CSSpixels = devicePixelRatio2 × devicepixels $$<br>dpi(dots per inch)分辨率、解析度，每英寸像素数，多用于屏幕显示领域。类似的有ppi(Pixels per inch)多用于印刷领域。分辨率越高，则每英寸内包含的像素数越大<br>dips(device independent pixels)设备独立像素 不依赖分辨率像素，android开发中为使不同分辨率外观一致引入dips概念，dip可以用来辅助区分视网膜设备还是非视网膜设备。<br>ppi(pixel per inch)单位英寸像素数，现实世界的一英寸内像素数<br>dpr(device-pixel-ratio)设备像素比率物理像素与逻辑像素的对应关系<br>resolution(分辨率)<br>display zoom<br>sampling(upsampling downsampling)iPhone6+在实际渲染时，downsampling/1.15(1242x2208-&gt;1080x1920)，准确的讲，应该是@2.46x。苹果为方便开发者用的是@3x的素材，然后再缩放到@2.46x上。<br>o(￣皿￣///)，突然不想玩了…这都是需要了解的， 但其中最重要的一点就是:css中的1px并不等于设备的1px!</p>
+<p>css中的1px(也是PS里的1px)并不等于设备的1px<br>在移动端浏览器中以及某些桌面浏览器中，window对象有一个devicePixelRatio属性，它的官方的定义为：<br>设备物理像素和设备独立像素的比例，也就是 devicePixelRatio = 物理像素 / 独立像素（逻辑像素）<br>css中的px就可以看做是设备的独立像素，所以通过devicePixelRatio，我们可以知道该设备上一个css<br>像素代表多少个物理像素。例如，在Retina屏的iphone上，devicePixelRatio的值为2，也就是说1个<br>css像素相当于2个物理像素<br>devicePixelRatio的值就是我们常说的倍屏， 2就是2倍屏，3就是3倍屏。 图中以高宽2px在2倍屏幕中的效果为例：</p>
+<p>px￼</p>
+<p>所以在设计师出设计稿中，往往会给出2x，3x的高清图，为的就是在这些Retina屏上更好的显示效果做准备。</p>
+<p>页面开发流程<br>这多么的终端设备，设计师和前端开发之间又如何进行协作的？</p>
+<p>设计师和fe适配写作的基本思路：</p>
+<p>选择一种尺寸作为设计和开发基准(我司以iPhone6的设计图为基准)<br>定义一套适配规则，自动适配其余尺寸的设备<br>特殊适配效果给出设计效果(还好，暂时未接到这样的需求)<br>开发流程图：</p>
+<p>process￼</p>
+<p>适配规则<br>先看一张 fe自己标注的markman设计稿。理想的情况下，设计师给出下面的标注图当然是最好啦(๑•́₃ •̀๑)，或者只标记出字体大小即可。其他行距，元素大小fe自己标注。</p>
+<p>demo-mark￼</p>
+<p>设计稿转换为页面大小<br>通过Sass中自定的公式进行转化</p>
+<p>// px单位转换rem, 单属性转换<br>@function pxTorem($px){<br> @return ($px / $browser-default-font-size) / 2 * 1rem;<br>}</p>
+<p>// 多值px单位转换为rem<br>@mixin remCalc($property, $values…) {<br> $max: length($values);//返回$values列表的长度值<br> // $pxValues: ‘’;<br> $remValues: ‘’;<br> $basefont: strip-units($browser-default-font-size);</p>
+<p> @for $i from 1 through $max {<br> $value: strip-units(nth($values, $i));<br> $remValues: #{$remValues + ($value/2)/$basefont}rem; // 除2，是因设计图750px   @if $i &lt; $max {  $remValues: #{$remValues + “ “};<br> }<br> }</p>
+<p> // #{$property}: $pxValues;  #{$property}: $remValues; }</p>
+<p>// 调用方式<br>.box{  width: pxTorem(160px); // width: 10rem;  @include remCala(“padding”, 16px, 32px); // 输出: padding: 1rem 2rem; }<br>公式：$$($px / $browser-default-font-size) / 2 * 1rem$$</p>
+<p>$browser-default-font-size: 默认为16px，是设置在html上的字体大小。后面缩放都是根据它的值来进行的。<br>除2 是以iPhone6为主的2倍屏进行换算的。<br>通过计算后从设计稿到页面最终的效果为：</p>
+<p>console￼</p>
+<p>CSS单位rem<br>在W3C规范中是这样描述rem的:</p>
+<p>font size of the root element.</p>
+<p>简单的理解，rem就是相对于根元素的font-size来做计算。而我们的方案中使用rem单位，是能轻易的根据的font-size计算出元素的盒模型大小。因此元素的，高宽、边距、行距只要换算为rem后，html的font-size值越大，元素也会变大，反之同理。</p>
+<p>html font-size<br>当手机viewport改变时，也就是换了更大，或者更小的手机在查看我们页面时。会通过一段代码时时监听viewport的大小变化，来改变html font-size的值。</p>
+<p>看下我们页面中监听viewport的代码：</p>
+<p>void function (){<br> var doc = document<br> var docEle = doc.documentElement</p>
+<p> function setRootFontSize(width){<br> width = width || docEle.getBoundingClientRect().width<br> docEle.style.fontSize = width / 375 * 16 + ‘px’<br> }</p>
+<p> if (/Mobi|mljr/.test(navigator.userAgent)){<br> void function (){<br> var timer</p>
+<p> setRootFontSize()<br> window.addEventListener(‘resize’, function (){<br> clearTimeout(timer)<br> timer = setTimeout(setRootFontSize, 300)<br> }, false)<br> }()<br> }<br> else {<br> void function (){<br> var pcWidth = 750<br> var style = doc.createElement(‘style’)</p>
+<p> style.innerHTML = ‘body{width:’ + pcWidth +’px!important;margin:0 auto!important}’<br> doc.getElementsByTagName(‘head’)[0].appendChild(style)<br> setRootFontSize(pcWidth)<br> }()<br> }<br>}()<br>通过上面的元素转换，viewport监听。一个崭新的页面就出路了！以iPhone5， iPhone6plus为例的最终效果图。</p>
+<p>demo-1￼demo-2￼</p>
+<p>为了让用户更好的在PC上访问H5页面，我们也是做了优化的！ 看下图：</p>
+<p>demo-3￼</p>
+<p>你们说这么好的fe团队，去哪找… 简直了(ง •̀_•́)ง</p>
+<p>icon适配规则<br>根据业务来决定使用哪种适配策略：</p>
+<ol>
+<li>设计师给出2x、3x(2倍，3倍图标)的icon。</li>
+<li>设计师给出icon的svg格式，fe转换成svg字体，在页面中使用。<br>2x、3x(2倍，3倍图标)的icon<br>优势：设计师只需存储2x,3x图标给前端即可，fe开发起来也很方便。 短板：逼格不高，当有大量打散的2x,3x图标时，维护起来也是个麻烦事，TA始终是张位图，经不起放大！</li>
+</ol>
+<p>我司目前是2x的icon，如图： icon-2x￼</p>
+<p>字体icon<br>优势:</p>
+<p>矢量图，不存在失真的问题，怎么放大都可以，随意更改颜色。<br>更加容易组件一套负责公司业务线的icon字体库<br>互联网大量的icon字体资源，可供设计师当作icon素材使用，也为fe提供了现成的icon方案<br>阿里巴巴矢量图库<br>著名的font Awesome字体库<br>icomoon<br>短板: 自定义的icon需要设计师转换为svg图标，多了额外的工作量。</p>
+<p>图标转换为icon字体需要设计师提供svg原图，fe通过工具将其转换为font 结合自身项目的构建工具可以去npm找，这里只说我司目前使用的icomoon.io</p>
+<p>首先，找到svg文件，拖入到你新建的项目中。 select￼</p>
+<p>选中所有svg图标，点击Generate Font进行字体生成： create￼</p>
+<p>然后点击DownLoad下载，生成后的字体源文件，以及css样式文件。里面包含了一个使用的demo。 或者直接点击图标，会弹出怎么使用的方法。 use￼</p>
+<p>接下来可以在项目中使用，我们新定义的字体了。</p>
+<p>@font-face {  font-family: ‘m-fonts’;  format(‘embedded-opentype’),  url(‘#{$fontPath}/m-fonts.ttf?a612tj’) format(‘truetype’);  font-weight: normal;  font-style: normal; }<br>.m-fonts{  font-family: “m-fonts”;  color:#fff;  vertical-align: middle;  font-weight: normal;  font-style: normal;  speak:none;  font-variant:normal;  text-transform:none;  line-height: 1;  /<em> Better Font Rendering =========== </em>/  -webkit-font-smoothing: antialiased;  -moz-osx-font-smoothing: grayscale; }</p>
+<p>.font-user:before {  content: “\7528”; }<br>.font-catalog:before {  content: “\5f55”; }<br>.font-money:before {  content: “\94b1”; }<br>.font-people:before {  content: “\4eba”; }</p>
+<p>// 使用方式<br>a{  color: #fff;  text-decoration: none;  &amp;:before{  font-size: pxTorem(36px);  font-weight: bold;  @extend .m-fonts;  @extend .font-catalog;  } }<br>页面中就可以看到我们引用我们刚刚定义的字体 m-fonts font￼</p>
+<p>以上，字体形式icon就完美的展现到了页面中。</p>
+<p>无论是图标icon，还是字体icon，每种都有自身的优缺点，择项目而定，不要一味的追求逼格高。</p>
+<p>我们为什么会使用这样的适配方案？<br>开发时是以逻辑像素为基础，为了方便，监听viewport中的公式，也是以逻辑像素为基础进行换算的。两者的优势：</p>
+<p>让其他开发者更加直观的理解和认识，不需要关心太多就可以开发页面。<br>符合中小项目的快速迭代开发模式。<br>新的公司，没有历史遗留问题，不需要其他分支适配方案。<br>当然，以上的整套开发流程，随着时间的推移，都会进行优化和完善的。目前手机淘宝给出的适配方案，大搜给出的方案都不错，需要了解的可以去自行百度。</p>
+<p>fe的同学需要了解，手淘的适配原理的，可以读下我写的：手淘H5页面的适配流程分析</p>
+</div><div class="tags"><a href="/tags/随笔/">随笔</a></div><div class="post-nav"><a href="/2018/06/16/web前端-yypack说明/" class="pre">web前端-yypack</a><a href="/2017/06/21/web前端-js/" class="next">web前端-js学习</a></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="widget"><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="请输入关键字..."/></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-gui"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/android/">android</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/blog/">blog</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/web前端/">web前端</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/小程序/">小程序</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">1</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/随笔/" style="font-size: 15px;">随笔</a> <a href="/tags/博客，文章/" style="font-size: 15px;">博客，文章</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-fei"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/06/16/web前端-yypack说明/">web前端-yypack</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/web前端-h5相关开发规范/">web前端-h5相关开发规范</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/21/web前端-js/">web前端-js学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/20/web前端-html-css/">web前端-html-css学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/16/web前端相关命令/">web前端相关命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/16/web前端指南/">web前端指南-大概的学习路线</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/web前端相关/">web前端相关-制定详细学习计划</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/web前端-jade/">web前端-jade</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/03/android相关/">android相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/03/小程序相关/">小程序相关</a></li></ul></div></div></div></div><a id="totop" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.2.0" async></script><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |<a href="/atom.xml">订阅本站</a> |<span>联系博主：<a href="mailto:87544319@qq.com" target="_blank" class="fa fa-email"> </a><a href="暂无" target="_blank" class="fa fa-weibo"></a><a href="bingxuanku.github.io" target="_blank" class="fa fa-github"> </a></span></p><p><span> Copyright &copy;<a href="/." rel="nofollow">华哥</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span><span><a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> Theme </a>by<a rel="nofollow" target="_blank" href="https://github.com/chaooo"> Charles.</a></span></p></div></div></div><script type="text/javascript" src="/js/search.json.js?v=1.2.0"></script></body></html>
